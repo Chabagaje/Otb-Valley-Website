@@ -14,8 +14,14 @@ export default {
       fontFamily: {
         sans: ["Inter", "sans-serif"],
       },
-      backdropBlur: {
-        xs: "2px",
+      boxShadow: {
+        // Neumorphism (soft outer glow)
+        neumorph:
+          "8px 8px 24px rgba(0,0,0,0.6), -8px -8px 24px rgba(255,255,255,0.02)",
+        // Claymorphism (chubby, lifted)
+        clay: "0px 8px 0px 0px rgba(0, 229, 255, 0.2), 0px 12px 30px -10px rgba(0,0,0,0.8)",
+        // Glass inner
+        glass: "0 8px 32px rgba(0,0,0,0.4)",
       },
     },
   },
