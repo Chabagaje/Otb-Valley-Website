@@ -214,9 +214,9 @@ const Home = () => {
                 <div className="absolute bottom-8 right-0 h-20 w-20 rounded-full bg-fuchsia-500/20 blur-3xl" />
                 <div className="relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-slate-950/70 p-3 shadow-2xl sm:p-4 lg:rotate-[-2deg]">
                   <img
-                    src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=1200&q=80"
+                    src="https://i.pinimg.com/1200x/71/2f/69/712f695a86d70768dfa6365861ac9ca9.jpg"
                     alt="Confident Black trader reviewing digital assets on a laptop"
-                    className="h-64 w-full rounded-[1.25rem] object-cover sm:h-72"
+                    className="w-full h-auto rounded-[1.25rem]"
                   />
                   <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-white/10 bg-slate-950/80 p-4 backdrop-blur-xl float-anim-delay-3">
                     <div className="flex items-center justify-between gap-3">
@@ -234,7 +234,6 @@ const Home = () => {
                     </div>
                   </div>
                 </div>
-
                 <div className="absolute -bottom-4 left-3 rounded-2xl border border-white/10 bg-white/10 p-3 backdrop-blur-xl lg:rotate-[-4deg] float-anim-delay-1">
                   <p className="text-[11px] uppercase tracking-[0.24em] text-white/45">
                     Fast payouts
@@ -404,9 +403,9 @@ const Home = () => {
               </div>
               <div className="relative reveal overflow-hidden rounded-[1.6rem] border border-white/10">
                 <img
-                  src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=900&q=80"
+                  src="https://i.pinimg.com/1200x/1e/2d/b7/1e2db7eec1cbbb72e664d655a1403420.jpg"
                   alt="Beautiful African lady smiling confidently"
-                  className="h-[320px] w-full object-cover sm:h-[380px]"
+                  className="w-full h-auto rounded-[1.6rem]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/20 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4 rounded-2xl border border-white/10 bg-slate-950/80 p-4 backdrop-blur-xl">
@@ -489,9 +488,9 @@ const Home = () => {
               </div>
               <div className="relative reveal overflow-hidden rounded-[1.6rem] border border-white/10">
                 <img
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80"
+                  src="https://i.pinimg.com/736x/3f/d8/e2/3fd8e217cf681a705cba3fb186cc39e0.jpg"
                   alt="Confident African woman professional in business attire"
-                  className="h-[280px] w-full object-cover sm:h-[340px]"
+                  className="w-full h-80 sm:h-96 object-cover object-top rounded-[1.6rem]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-l from-slate-950/80 via-slate-900/20 to-transparent" />
               </div>
