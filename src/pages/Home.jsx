@@ -688,6 +688,49 @@ const Home = () => {
         </section>
 
         <section className="section-padding max-width">
+          <div className="glass rounded-3xl p-6 text-center reveal card-hover sm:p-8 md:p-12 lg:p-16">
+            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
+              Trade Anywhere, Anytime
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-white/50">
+              Get the OTBValley mobile app for iOS and Android. Trade on the go.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3 sm:gap-4">
+              <a
+                href="https://apps.apple.com/app/quidax-pro/id6742988930"
+                target="_blank"
+                rel="noreferrer"
+                className="glass-button glass-button-primary w-full px-6 py-3 text-base sm:w-auto sm:px-8 sm:py-4 flex items-center gap-2 justify-center"
+              >
+                <img
+                  src="https://cdn.simpleicons.org/apple/FFFFFF"
+                  alt="Apple"
+                  className="h-10 w-15"
+                />
+                <span>Download for iOS</span>
+              </a>
+              <a
+                href="https://play.google.com/store/apps/details?id=io.quidax.app"
+                target="_blank"
+                rel="noreferrer"
+                className="glass-button w-full px-6 py-3 text-base sm:w-auto sm:px-8 sm:py-4 flex items-center gap-2 justify-center"
+              >
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF4DvFF68q1ZsMoVCRiNFZtmo6y9NaYxoPAG6oEJD7Zw&s=10"
+                  alt="Google Play"
+                  className="h-10 w-15 border rounded-md border-white/20"
+                />
+                <span>Download for Android</span>
+              </a>
+            </div>
+            <div className="mt-6 flex flex-wrap justify-center gap-8 text-sm text-white/40">
+              <span>⭐ 4.9 on App Store</span>
+              <span>⭐ 4.8 on Google Play</span>
+            </div>
+          </div>
+        </section>
+
+        <section className="section-padding max-width">
           <div className="mx-auto mb-16 max-w-3xl text-center reveal">
             <span className="inline-block rounded-full border border-indigo-400/30 bg-white/5 px-4 py-1 text-xs font-medium uppercase tracking-[0.28em] text-indigo-300">
               Ecosystem
