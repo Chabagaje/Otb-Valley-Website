@@ -13,12 +13,49 @@ import {
   ShieldCheck,
   Zap,
 } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
 
+// ─── ANIMATED COUNTER HOOK ───
+const useCounter = (target, duration = 2000) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    if (!ref.current || hasAnimated) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasAnimated(true);
+          const startTime = performance.now();
+          const updateCount = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setCount(Math.floor(eased * target));
+            if (progress < 1) {
+              requestAnimationFrame(updateCount);
+            }
+          };
+          requestAnimationFrame(updateCount);
+        }
+      },
+      { threshold: 0.2 },
+    );
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [target, duration, hasAnimated]);
+
+  return { count, ref };
+};
+
+// ─── STATS WITH TARGET NUMBERS ───
 const stats = [
-  { label: "Active Users", value: "50K+" },
-  { label: "Traded Monthly", value: "$10M+" },
-  { label: "Trades Completed", value: "250K" },
-  { label: "Average Rating", value: "4.9★" },
+  { label: "Active Users", value: "50K+", target: 50000 },
+  { label: "Traded Monthly", value: "$10M+", target: 10000000 },
+  { label: "Trades Completed", value: "250K", target: 250000 },
+  { label: "Average Rating", value: "4.9★", target: 4.9 },
 ];
 
 const features = [
@@ -205,7 +242,10 @@ const Home = () => {
                 <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-white/40 lg:justify-start">
                   <span>✅ Trusted by 50,000+ users</span>
                   <span className="h-6 w-px bg-white/10" />
-                  <span>⭐ 4.9/5 rating</span>
+                  {/* ─── GOLD STAR ─── */}
+                  <span>
+                    <span className="text-yellow-400">⭐</span> 4.9/5 rating
+                  </span>
                 </div>
               </div>
 
@@ -277,17 +317,32 @@ const Home = () => {
           </div>
         </section>
 
+        {/* ─── ANIMATED STATS SECTION ─── */}
         <section className="section-padding max-width">
           <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
-            {stats.map((stat) => (
-              <div
-                key={stat.label}
-                className="glass rounded-2xl p-5 text-center reveal card-hover sm:p-6"
-              >
-                <div className="stat-number glow-text">{stat.value}</div>
-                <p className="text-white/50">{stat.label}</p>
-              </div>
-            ))}
+            {stats.map((stat) => {
+              const { count, ref } = useCounter(stat.target, 2000);
+              let displayValue;
+              if (stat.label === "Average Rating") {
+                displayValue = count.toFixed(1) + "★";
+              } else if (stat.value.includes("K")) {
+                displayValue = (count / 1000).toFixed(0) + "K+";
+              } else if (stat.value.includes("M")) {
+                displayValue = "$" + (count / 1000000).toFixed(0) + "M+";
+              } else {
+                displayValue = count;
+              }
+              return (
+                <div
+                  key={stat.label}
+                  ref={ref}
+                  className="glass rounded-2xl p-5 text-center reveal card-hover sm:p-6"
+                >
+                  <div className="stat-number glow-text">{displayValue}</div>
+                  <p className="text-white/50">{stat.label}</p>
+                </div>
+              );
+            })}
           </div>
         </section>
 
@@ -322,7 +377,8 @@ const Home = () => {
                 key={title}
                 className="glass rounded-2xl p-6 text-center reveal card-hover sm:p-8"
               >
-                <span className="inline-block text-4xl font-bold text-indigo-400/30">
+                {/* ─── WEB3 STYLE NUMBER ─── */}
+                <span className="inline-block text-5xl font-semibold bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(34,211,238,0.3)]">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <h3 className="mt-2 text-xl font-semibold">{title}</h3>
@@ -364,9 +420,14 @@ const Home = () => {
           </div>
         </section>
 
-        <section id="giftcard" className="section-padding max-width">
-          <div className="section-shell p-6 sm:p-8 lg:p-10">
-            <div className="grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr]">
+        <section
+          id="giftcard"
+          className="w-full py-12 sm:py-16 lg:py-20 !rounded-none"
+        >
+          {/* Full-width background card – no border radius */}
+          <div className="section-shell w-full max-w-none px-4 sm:px-6 lg:px-8 !rounded-none">
+            {/* ─── ADDED PADDING HERE ─── */}
+            <div className="max-w-7xl mx-auto grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr] py-16 px-4">
               <div className="reveal">
                 <span className="inline-block rounded-full border border-indigo-400/30 bg-white/5 px-4 py-1 text-xs font-medium uppercase tracking-[0.28em] text-indigo-300">
                   Gift Card Hub
@@ -401,14 +462,15 @@ const Home = () => {
                   Start Selling Gift Cards →
                 </a>
               </div>
-              <div className="relative reveal overflow-hidden rounded-[1.6rem] border border-white/10">
+              {/* ─── Image wrapper with border radius ─── */}
+              <div className="relative reveal overflow-hidden border border-white/10 rounded-[1.6rem]">
                 <img
                   src="https://i.pinimg.com/1200x/1e/2d/b7/1e2db7eec1cbbb72e664d655a1403420.jpg"
                   alt="Beautiful African lady smiling confidently"
                   className="w-full h-auto rounded-[1.6rem]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/20 to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 rounded-2xl border border-white/10 bg-slate-950/80 p-4 backdrop-blur-xl">
+                {/* ─── Inner text card with border radius ─── */}
+                <div className="absolute bottom-4 left-4 right-4 border border-white/10 bg-slate-950/80 p-4 backdrop-blur-xl rounded-2xl">
                   <p className="text-[11px] uppercase tracking-[0.24em] text-indigo-300">
                     Trusted by real traders
                   </p>
@@ -559,7 +621,7 @@ const Home = () => {
                   </div>
                 </div>
                 <p className="text-sm text-white/70">“{testimonial.quote}”</p>
-                <div className="mt-2 text-xs text-indigo-400">⭐ 5.0</div>
+                <div className="mt-2 text-xs text-yellow-400">⭐ 5.0</div>
               </div>
             ))}
           </div>
@@ -665,41 +727,6 @@ const Home = () => {
                 href="https://apps.apple.com/app/quidax-pro/id6742988930"
                 target="_blank"
                 rel="noreferrer"
-                className="glass-button glass-button-primary w-full px-6 py-3 text-base sm:w-auto sm:px-8 sm:py-4"
-              >
-                <Apple className="h-5 w-5" />
-                <span>Download for iOS</span>
-              </a>
-              <a
-                href="https://play.google.com/store/apps/details?id=io.quidax.app"
-                target="_blank"
-                rel="noreferrer"
-                className="glass-button w-full px-6 py-3 text-base sm:w-auto sm:px-8 sm:py-4"
-              >
-                <Play className="h-5 w-5" />
-                <span>Download for Android</span>
-              </a>
-            </div>
-            <div className="mt-6 flex flex-wrap justify-center gap-8 text-sm text-white/40">
-              <span>⭐ 4.9 on App Store</span>
-              <span>⭐ 4.8 on Google Play</span>
-            </div>
-          </div>
-        </section>
-
-        <section className="section-padding max-width">
-          <div className="glass rounded-3xl p-6 text-center reveal card-hover sm:p-8 md:p-12 lg:p-16">
-            <h2 className="text-3xl font-semibold tracking-tight md:text-4xl">
-              Trade Anywhere, Anytime
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-white/50">
-              Get the OTBValley mobile app for iOS and Android. Trade on the go.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3 sm:gap-4">
-              <a
-                href="https://apps.apple.com/app/quidax-pro/id6742988930"
-                target="_blank"
-                rel="noreferrer"
                 className="glass-button glass-button-primary w-full px-6 py-3 text-base sm:w-auto sm:px-8 sm:py-4 flex items-center gap-2 justify-center"
               >
                 <img
@@ -724,8 +751,12 @@ const Home = () => {
               </a>
             </div>
             <div className="mt-6 flex flex-wrap justify-center gap-8 text-sm text-white/40">
-              <span>⭐ 4.9 on App Store</span>
-              <span>⭐ 4.8 on Google Play</span>
+              <span>
+                <span className="text-yellow-400">⭐</span> 4.9 on App Store
+              </span>
+              <span>
+                <span className="text-yellow-400">⭐</span> 4.8 on Google Play
+              </span>
             </div>
           </div>
         </section>
