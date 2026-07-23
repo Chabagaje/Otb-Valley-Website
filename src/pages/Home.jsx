@@ -684,7 +684,7 @@ const Home = () => {
           </div>
         </section>
 
-        <section id="faq" className="section-padding max-width">
+        <section id="faq" className="section-padding max-width ">
           <div className="mx-auto mb-16 max-w-3xl text-center reveal">
             <span className="inline-block rounded-full border border-indigo-400/30 bg-white/5 px-4 py-1 text-xs font-medium uppercase tracking-[0.28em] text-indigo-300">
               Support
